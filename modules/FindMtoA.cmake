@@ -14,12 +14,13 @@ find_package(PackageHandleStandardArgs)
 ##
 ## Obtain MtoA install location
 ##
-set(MTOA_LOCATION $ENV{MTOA_LOCATION})
+set(MTOA_LOCATION ${MTOA_LOCATION})
 
-set(MTOA_LIBRARY_DIR ${MTOA_LOCATION}/lib)
+set(MTOA_LIB ${MTOA_LOCATION}/lib)
+set(MTOA_BIN ${MTOA_LOCATION}/bin)
 set(MTOA_INCLUDE_DIR ${MTOA_LOCATION}/include)
 
 message(STATUS "MTOA location: ${MTOA_LOCATION}")
-message(STATUS "MTOA LIB:      ${MTOA_mtoa_api_LIBRARY}")
-message(STATUS "MTOA LIB:      ${MTOA_LIBRARY}")
+message(STATUS "MTOA BIN:      ${MTOA_BIN}")
+message(STATUS "MTOA LIB:      ${MTOA_LIB}")
 message(STATUS "MTOA include:  ${MTOA_INCLUDE_DIR}")
