@@ -4,8 +4,9 @@
 .idea/*
 cmake-build-debug/*
 build/*
-.vs
+.vs/*
 CMakeSettings.json
+out/*
 
 ### C++ ###
 # Prerequisites

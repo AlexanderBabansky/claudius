@@ -7,6 +7,8 @@ execute_process(
 )
 
 add_definitions( -DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}" )
+set(MAYA_MODULE_NAME claudius-${GIT_COMMIT_HASH}-Maya-${MAYA_VERSION}-${CMAKE_SYSTEM_NAME})
+set(MAYA_MODULE_FOLDER ${CMAKE_BINARY_DIR}/${MAYA_MODULE_NAME})
 
 add_subdirectory(utils)
 add_subdirectory(io)

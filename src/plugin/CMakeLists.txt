@@ -32,9 +32,6 @@ configure_file(claudius_template.mod ${CLAUDIUS_MAYA_MODULE})
 # installation as Maya Module
 # todo use version number
 set(PROJECT_PLAT)
-set(MAYA_MODULE_NAME claudius-${GIT_COMMIT_HASH}-Maya-${MAYA_VERSION}-${CMAKE_SYSTEM_NAME})
-
-set(MAYA_MODULE_FOLDER $<TARGET_FILE_DIR:${PROJECT_NAME}>/${MAYA_MODULE_NAME})
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -56,10 +53,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 # copy maya module
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}>/${CLAUDIUS_MAYA_MODULE} ${MAYA_MODULE_FOLDER}/${CLAUDIUS_MAYA_MODULE})
-
-# copy arnold procedural
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}ArnoldProcedural>/${PROJECT_NAME}ArnoldProcedural.dll ${MAYA_MODULE_FOLDER}/procedurals/${PROJECT_NAME}ArnoldProcedural.dll)
 
 # copy arnold extension
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
