@@ -49,7 +49,6 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride {
   static MPxDrawOverride *creator(const MObject &obj);
 
  public:
-  static MTypeId id;
 
   static void drawCallback(const MDrawContext &context, const MUserData *data);
 

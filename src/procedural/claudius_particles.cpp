@@ -75,7 +75,14 @@ procedural_get_node
         AiArraySetFlt(radiusarray, i, pointCloudData->particleRadius);
     }
 
-    AtNode *pointsNode = AiNode("points");
+    AtNode* pointsNode = nullptr;
+#if MAYA_VERSION>2018
+    AtUniverse* universe = AiNodeGetUniverse(node);
+    pointsNode = AiNode(universe, "points");
+#else
+    pointsNode = AiNode("points");
+#endif
+
     AiNodeSetArray(pointsNode, "points", pointarray);
     AiNodeSetArray(pointsNode, "radius", radiusarray);
     AiNodeSetStr(pointsNode, "mode", "sphere");

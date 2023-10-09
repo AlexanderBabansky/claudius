@@ -110,6 +110,7 @@ void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *v
                 gGLFT->glNewList(visualizerData->currentDisplayList, GL_COMPILE);
 
                 ////////// list begin
+                gGLFT->glPushMatrix();
                 gGLFT->glMultMatrixd((double *) &displayOptions.matrix[0][0]);
                 gGLFT->glPointSize(1.0f);
                 gGLFT->glColor3f(0.0f, 0.0f, 1.0f);
@@ -123,6 +124,7 @@ void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *v
                 }
                 gGLFT->glEnd();
                 ////////// list end
+                gGLFT->glPopMatrix();
                 gGLFT->glEndList();
             }
         }
