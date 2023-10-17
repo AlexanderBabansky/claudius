@@ -16,4 +16,4 @@ add_subdirectory(io)
 add_subdirectory(plugin)
 add_subdirectory(procedural)
 add_subdirectory(extension)
-
+add_subdirectory(arnold_cli)
