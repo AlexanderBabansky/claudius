@@ -16,6 +16,7 @@ MTypeId ClaudiusVisualizer::id(0x80007);
 MObject ClaudiusVisualizer::filePathAttribute;
 MObject ClaudiusVisualizer::renderWithColorAttribute;
 MObject ClaudiusVisualizer::displayEveryNthAttribute;
+MObject ClaudiusVisualizer::particleSizeAttribute;
 
 ClaudiusVisualizer::ClaudiusVisualizer(){
   particleContainer = nullptr;
@@ -66,6 +67,17 @@ MStatus ClaudiusVisualizer::initialize() {
     typedBoolAttributeEveryNth.setDefault(1);
     typedBoolAttributeEveryNth.setMin(1);
     addAttribute(displayEveryNthAttribute);
+
+    MFnNumericAttribute typedAttributeParticleSize;
+    particleSizeAttribute = typedAttributeParticleSize.create("particleSize", "particleSize", MFnNumericData::kFloat);
+    typedAttributeParticleSize.setReadable(true);
+    typedAttributeParticleSize.setWritable(true);
+    typedAttributeParticleSize.setKeyable(false);
+    typedAttributeParticleSize.setConnectable(true);
+    typedAttributeParticleSize.setStorable(true);
+    typedAttributeParticleSize.setDefault(0.01);
+    typedAttributeParticleSize.setMin(0);
+    addAttribute(particleSizeAttribute);
 
     return MStatus::kSuccess;
 }

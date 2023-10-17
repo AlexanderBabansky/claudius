@@ -29,6 +29,7 @@ class ClaudiusVisualizer:  public MPxLocatorNode{
     static MObject filePathAttribute;
     static MObject renderWithColorAttribute;
     static MObject displayEveryNthAttribute;
+    static MObject particleSizeAttribute;
     ParticleContainer *particleContainer;
  protected:
   MCallbackId m_attrNameCallbackId;
