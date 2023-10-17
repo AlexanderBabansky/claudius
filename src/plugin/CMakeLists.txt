@@ -54,10 +54,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}>/${CLAUDIUS_MAYA_MODULE} ${MAYA_MODULE_FOLDER}/${CLAUDIUS_MAYA_MODULE})
 
-# copy arnold extension
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}MtoaExtension>/${PROJECT_NAME}MtoaExtension.dll ${MAYA_MODULE_FOLDER}/extensions/${PROJECT_NAME}MtoaExtension.dll)
-
 # zip it
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "C:/Program Files/7-Zip/7z.exe" a -tzip ${MAYA_MODULE_FOLDER}.zip ${MAYA_MODULE_FOLDER})

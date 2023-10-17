@@ -15,3 +15,7 @@ target_link_directories(${LIBRARY_NAME} PUBLIC ${ARNOLD_LIBRARY_DIR} ${MAYA_LIBR
 
 # NOTE: no ${MAYA_LIBRARIES}, this does not work for some reason
 target_link_libraries(${LIBRARY_NAME} ai.lib OpenGl32.lib glu32.lib Foundation.lib OpenMaya.lib OpenMayaRender.lib OpenMayaUI.lib OpenMayaAnim.lib OpenMayaFX.lib mtoa_api.lib)
+
+# copy arnold extension
+add_custom_command(TARGET ${LIBRARY_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${LIBRARY_NAME}>/${LIBRARY_NAME}.dll ${MAYA_MODULE_FOLDER}/extensions/${LIBRARY_NAME}.dll)

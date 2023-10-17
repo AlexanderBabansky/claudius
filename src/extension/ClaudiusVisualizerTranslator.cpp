@@ -13,6 +13,7 @@ void ClaudiusVisializerTranslator::Export(AtNode* claudius_particle_cloud)
     AiNodeSetStr(claudius_particle_cloud, "file_path", FindMayaPlug("particleFile").asString().asChar());
     AiNodeSetFlt(claudius_particle_cloud, "particle_radius", 0.01);
 
+#if MAYA_VERSION<=2018
     auto user_data_rgb = AddArnoldNode("user_data_rgb");
     AiNodeSetStr(user_data_rgb, "name", (std::string(AiNodeGetName(claudius_particle_cloud)) + "_user_data_rgb").c_str());
     if(FindMayaPlug("renderWithColor").asBool()){
@@ -27,6 +28,7 @@ void ClaudiusVisializerTranslator::Export(AtNode* claudius_particle_cloud)
     AiNodeLink(user_data_rgb, "base_color", shader);
 
     AiNodeSetPtr(claudius_particle_cloud, "shader", shader);
+#endif
     ExportMatrix(claudius_particle_cloud);
 }
 

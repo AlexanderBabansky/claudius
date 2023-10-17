@@ -79,6 +79,15 @@ procedural_get_node
 #if MAYA_VERSION>2018
     AtUniverse* universe = AiNodeGetUniverse(node);
     pointsNode = AiNode(universe, "points");
+    AtNode* shaderNode = AiNode(universe, "standard_surface");
+    if (particleContainer.hasColorData()) {
+        AtNode* user_data_rgb_node = AiNode(universe, "user_data_rgb");
+        AiNodeSetStr(user_data_rgb_node, "attribute", "particle_color");
+        AiNodeSetRGB(user_data_rgb_node, "default", 1, 1, 1);
+        AiNodeLink(user_data_rgb_node, "base_color", shaderNode);
+    }
+    AtArray* shadersArr = AiArray(1, 1, AI_TYPE_NODE, shaderNode);
+    AiNodeSetArray(pointsNode, "shader", shadersArr);
 #else
     pointsNode = AiNode("points");
 #endif
