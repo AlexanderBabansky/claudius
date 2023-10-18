@@ -6,10 +6,10 @@
 const unsigned int ParticleContainer::particleCount() {
   return particles.size() / 3;
 }
-void ParticleContainer::addParticle(float x, float y, float z) {
-  particles.emplace_back(x);
-  particles.emplace_back(y);
-  particles.emplace_back(z);
+void ParticleContainer::setParticle(size_t index, float x, float y, float z) {
+  particles[index * 3] = x;
+  particles[index * 3 + 1] = y;
+  particles[index * 3 + 2] = z;
 }
 const bool ParticleContainer::isEmpty() {
   return particleCount() == 0;
@@ -23,10 +23,11 @@ const bool ParticleContainer::hasColorData() {
 const int *ParticleContainer::getColorData() {
     return colors.data();
 }
-void ParticleContainer::addColor(int r, int g, int b) {
-   colors.emplace_back(r);
-   colors.emplace_back(g);
-   colors.emplace_back(b);
+void ParticleContainer::setColor(size_t index, int r, int g, int b)
+{
+    colors[index * 3] = r;
+    colors[index * 3 + 1] = g;
+    colors[index * 3 + 2] = b;
 }
 const bool ParticleContainer::hasRemissionData() {
     return !remissions.empty();
@@ -34,15 +35,16 @@ const bool ParticleContainer::hasRemissionData() {
 const float *ParticleContainer::getRemissionsData() {
     return remissions.data();
 }
-void ParticleContainer::addRemission(float r) {
-    remissions.emplace_back(r);
+void ParticleContainer::setRemission(size_t index, float r)
+{
+    remissions[index] = r;
 }
-void ParticleContainer::reservePositions(unsigned int count) {
-    particles.reserve(count * 3);
+void ParticleContainer::resizePositions(unsigned int count) {
+    particles.resize(count * 3);
 }
-void ParticleContainer::reserveColors(unsigned int count) {
-    colors.reserve(count * 3);
+void ParticleContainer::resizeColors(unsigned int count) {
+    colors.resize(count * 3);
 }
-void ParticleContainer::reserveRemissions(unsigned int count) {
-    remissions.reserve(count);
+void ParticleContainer::resizeRemissions(unsigned int count) {
+    remissions.resize(count);
 }

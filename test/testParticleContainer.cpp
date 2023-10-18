@@ -14,12 +14,12 @@ TEST_CASE("ParticleContainer") {
   
   SECTION("particleCountShouldBeIncreasedByOne"){
     unsigned int oldParticleCount = particleContainer.particleCount();
-    particleContainer.addParticle(1,2,3);
+    particleContainer.setParticle(0, 1, 2, 3);
     REQUIRE(particleContainer.particleCount() == oldParticleCount +1);
   }
   
   SECTION("shouldReturnCorrectPositionsPointer"){
-    particleContainer.addParticle(1,2,3);
+    particleContainer.setParticle(0, 1, 2, 3);
     const float *particleData = particleContainer.getParticleData();
     REQUIRE(particleData[0] == 1);
     REQUIRE(particleData[1] == 2);
