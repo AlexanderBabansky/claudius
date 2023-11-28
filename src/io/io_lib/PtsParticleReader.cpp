@@ -68,7 +68,7 @@ void processChunk(const char *ptr, const char *end,
                   ParticleContainer &particleContainer, size_t startIndex,
                   bool positionOnly, bool positionAndRgb,
                   bool positionRemissionAndRgb,
-                  bool positionRemissionQualityAndRgb)
+                  bool positionRemissionQualityAndRgb, bool positionRemissionRgbSomeData)
 {
     size_t index = startIndex;
     while (ptr < end) {
@@ -96,6 +96,12 @@ void processChunk(const char *ptr, const char *end,
             particleContainer.setRemission(index, data[3]);
             particleContainer.setColor(index, data[5], data[6], data[7]);
         }
+        else if (positionRemissionRgbSomeData) {
+            particleContainer.setParticle(index, data[PTS_X_INDEX], data[PTS_Y_INDEX],
+                data[PTS_Z_INDEX]);
+            particleContainer.setRemission(index, data[3]);
+            particleContainer.setColor(index, data[4], data[5], data[6]);
+        }
         ++index;
     }
 }
@@ -121,11 +127,13 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
     const bool positionAndRgb = vec.size() == 6;
     const bool positionRemissionAndRgb = vec.size() == 7;
     const bool positionRemissionQualityAndRgb = vec.size() == 8;
+    const bool positionRemissionRgbSomeData = vec.size() == 10;
 
     std::cout << fmt::format("positionOnly: {}", positionOnly ) << std::endl;;
     std::cout << fmt::format("positionAndRgb: {}", positionAndRgb ) << std::endl;;
     std::cout << fmt::format("positionRemissionAndRgb: {}", positionRemissionAndRgb ) << std::endl;;
     std::cout << fmt::format("positionRemissionQualityAndRgb: {}", positionRemissionQualityAndRgb ) << std::endl;;
+    std::cout << fmt::format("positionRemissionRgbSomeData: {}", positionRemissionRgbSomeData ) << std::endl;;
 
     if (positionOnly) {
         std::cout << fmt::format("positionOnly") << std::endl;;
@@ -147,6 +155,15 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
         particleContainer.resizeRemissions(particleCount);
     } else if (positionRemissionQualityAndRgb) {
         std::cout << fmt::format("positionRemissionQualityAndRgb") << std::endl;;
+        std::cout << fmt::format("resize positions") << std::endl;;
+        particleContainer.resizePositions(particleCount);
+        std::cout << fmt::format("resize colors") << std::endl;;
+        particleContainer.resizeColors(particleCount);
+        std::cout << fmt::format("resize remissions") << std::endl;;
+        particleContainer.resizeRemissions(particleCount);
+    }
+    else if (positionRemissionRgbSomeData) {
+        std::cout << fmt::format("positionRemissionRgbSomeData") << std::endl;;
         std::cout << fmt::format("resize positions") << std::endl;;
         particleContainer.resizePositions(particleCount);
         std::cout << fmt::format("resize colors") << std::endl;;
@@ -210,10 +227,10 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
         threads.push_back(std::thread([chunkBegin, ptr, &particleContainer,
                                        startIndex, positionOnly, positionAndRgb,
                                        positionRemissionAndRgb,
-                                       positionRemissionQualityAndRgb]() {
+                                       positionRemissionQualityAndRgb, positionRemissionRgbSomeData]() {
           processChunk(chunkBegin, ptr, particleContainer, startIndex,
                        positionOnly, positionAndRgb, positionRemissionAndRgb,
-                       positionRemissionQualityAndRgb);
+                       positionRemissionQualityAndRgb, positionRemissionRgbSomeData);
         }));
     }
     for (size_t i = 0; i < threads.size(); ++i) {
