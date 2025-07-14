@@ -3,7 +3,7 @@ import time
 
 import maya.cmds as cmds
 import pymel.core as pm
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 
 class PointCloudConverter(object):
@@ -50,7 +50,7 @@ class PointCloudConverter(object):
         ass_files = []
 
         for i, chunk_file in enumerate(chunk_files):
-            print "Converting chunk {}".format(i)
+            print ("Converting chunk {}".format(i))
             claudius_node.particleFile.set(chunk_file)
             target_path = os.path.splitext(chunk_file)[0] + ".ass"
             self.export_node_to_ass(claudius_node, target_path)
@@ -81,7 +81,7 @@ class PointCloudConverter(object):
                     file_name = output_template.format(file_counter)
                     written_files.append((file_name))
                     with open(output_template.format(file_counter), "w") as chunk_file:
-                        print "writing chunk {}".format(file_counter)
+                        print ("writing chunk {}".format(file_counter))
                         chunk_file.write(str(len(lines)) + "\n")
                         chunk_file.writelines(lines)
                         lines = []
@@ -93,23 +93,23 @@ class PointCloudConverter(object):
         file_name = output_template.format(file_counter)
         written_files.append((file_name))
         with open(file_name, "w") as chunk_file:
-            print "writing chunk {}".format(file_counter)
+            print ("writing chunk {}".format(file_counter))
             chunk_file.write(str(len(lines)) + "\n")
             chunk_file.writelines(lines)
 
-        print "Time to split pts into chunks: {}".format(self._pretty_time(time.time() - start))
+        print ("Time to split pts into chunks: {}".format(self._pretty_time(time.time() - start)))
 
         ass_start = time.time()
         ass_files = self.chunks_to_ass(written_files)
 
-        print "Time to create .ass files {}".format(self._pretty_time(ass_start - start))
-        print "Total time: {}".format(self._pretty_time(time.time() - start))
+        print ("Time to create .ass files {}".format(self._pretty_time(ass_start - start)))
+        print ("Total time: {}".format(self._pretty_time(time.time() - start)))
         return ass_files
 
     def import_ass_files(self, ass_files):
         for i, ass_file in enumerate(ass_files):
-            print "Importing chunk {}".format(i)
-            print ass_file
+            print ("Importing chunk {}".format(i))
+            print (ass_file)
             cmds.file(ass_file, i=True)
 
 

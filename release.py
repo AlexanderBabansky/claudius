@@ -18,8 +18,8 @@ def should_release():
         if current_tag == "v" + current_version:
             return True
         else:
-            print 'current tag and current version have to match: current tag: "{}", current version: "v{}"'.format(
-                current_tag, current_version)
+            print('current tag and current version have to match: current tag: "{}", current version: "v{}"'.format(
+                current_tag, current_version))
             return False
 
 
@@ -33,7 +33,7 @@ def collect_files():
 
 def deploy_to_one_drive(files, release=False):
     if release:
-        print "doing release"
+        print ("doing release")
 
         matched_files = set()
         for file_pattern in files:
@@ -45,7 +45,7 @@ def deploy_to_one_drive(files, release=False):
                                   'releases' if release else 'dev_builds',
                                   os.path.basename(matched_file))
 
-            print "copy {} => {}".format(matched_file, target)
+            print ("copy {} => {}".format(matched_file, target))
             shutil.copy(matched_file, target)
 
 
